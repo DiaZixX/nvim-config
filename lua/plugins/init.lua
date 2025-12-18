@@ -13,6 +13,7 @@ plugins[1] = { 'nvim-lua/plenary.nvim' } -- required by many plugins
 -- ===============================
 vim.list_extend(plugins, require 'plugins.lsp')
 vim.list_extend(plugins, require 'plugins.cmp')
+vim.list_extend(plugins, require 'plugins.neogen')
 
 -- ===============================
 -- DAP debugger
