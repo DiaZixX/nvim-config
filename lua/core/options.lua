@@ -44,7 +44,7 @@ opt.splitbelow = true -- Horizontal split goes below
 opt.mouse = 'a' -- Enable mouse support
 --  Schedule the setting after `UiEnter` because it can increase startup-time.
 vim.schedule(function()
-  opt.clipboard = 'unnamedplus' -- Sync OS clipboard and Neovim
+    opt.clipboard = 'unnamedplus' -- Sync OS clipboard and Neovim
 end)
 
 -- ===== Performance =====
