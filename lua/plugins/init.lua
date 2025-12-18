@@ -56,5 +56,7 @@ vim.list_extend(plugins, require 'plugins.which-key')
 vim.list_extend(plugins, require 'plugins.misc')
 vim.list_extend(plugins, require 'plugins.conform')
 vim.list_extend(plugins, require 'plugins.autopairs')
+vim.list_extend(plugins, require 'plugins.substitute')
+vim.list_extend(plugins, require 'plugins.comment')
 
 return plugins
