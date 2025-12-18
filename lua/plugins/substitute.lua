@@ -66,26 +66,26 @@ local function substitute_word_all()
 end
 
 -- Configuration des keymaps
-vim.keymap.set('n', '<leader>sw', substitute_word, {
-    desc = '[S]ubstitute [W]ord (single occurrence per line, current line)',
+vim.keymap.set('n', '<leader>sr', substitute_word, {
+    desc = '[S]ubstitute [R]eplace (single occurrence per line, current line)',
     noremap = true,
     silent = true,
 })
 
-vim.keymap.set('v', '<leader>sw', substitute_word, {
-    desc = '[S]ubstitute [W]ord (single occurrence per line, selection)',
+vim.keymap.set('v', '<leader>sr', substitute_word, {
+    desc = '[S]ubstitute [R]eplace (single occurrence per line, selection)',
     noremap = true,
     silent = true,
 })
 
-vim.keymap.set('n', '<leader>sa', substitute_word_all, {
-    desc = '[S]ubstitute [A]ll occurrences (current line)',
+vim.keymap.set('n', '<leader>sra', substitute_word_all, {
+    desc = '[S]ubstitute [R]eplace [A]ll occurrences (current line)',
     noremap = true,
     silent = true,
 })
 
-vim.keymap.set('v', '<leader>sa', substitute_word_all, {
-    desc = '[S]ubstitute [A]ll occurrences (selection)',
+vim.keymap.set('v', '<leader>sra', substitute_word_all, {
+    desc = '[S]ubstitute [R]eplace [A]ll occurrences (selection)',
     noremap = true,
     silent = true,
 })
