@@ -76,13 +76,17 @@ return {
                         pylsp = {
                             plugins = {
                                 pyflakes = { enabled = false },
-                                pycodestyle = { enabled = false },
+                                pycodestyle = {
+                                    enabled = true,
+                                    maxLineLength = 120, -- Passer de 79 à 120
+                                },
                                 autopep8 = { enabled = false },
                                 yapf = { enabled = false },
                                 mccabe = { enabled = false },
                                 pylsp_mypy = { enabled = false },
                                 pylsp_black = { enabled = false },
                                 pylsp_isort = { enabled = false },
+                                flake8 = { enabled = false },
                             },
                         },
                     },
