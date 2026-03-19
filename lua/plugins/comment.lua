@@ -37,8 +37,8 @@ return {
                     block = '<leader>cb', -- Toggle block comment
                 },
                 opleader = {
-                    line = '<leader>c', -- Opérateur pour commenter (ex: <leader>c3j pour 3 lignes)
-                    block = '<leader>b', -- Opérateur pour block comment
+                    line = '<leader>cc', -- Opérateur pour commenter (ex: <leader>c3j pour 3 lignes)
+                    block = '<leader>cb', -- Opérateur pour block comment
                 },
 
                 -- Mappings additionnels
