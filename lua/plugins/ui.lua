@@ -73,9 +73,4 @@ return {
             map('n', '<leader>bf', '<Cmd>BufferLineTogglePin<CR>', { desc = '[B]uffer Toggle [F]ix (Pin)' })
         end,
     },
-
-    {
-        'numToStr/Comment.nvim', -- Comment plugin with auto-detect symbol
-        opts = {},
-    },
 }
