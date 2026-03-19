@@ -1,79 +1,44 @@
 -- lua/plugins/substitute.lua
 -- Keymaps pour substitution de mots sur ligne(s)
 
--- Fonction pour substituer un mot par un autre
 local function substitute_word()
-    -- Récupérer le mot sous le curseur
-    local word = vim.fn.expand '<cword>'
+    local target = vim.fn.expand '<cword>'
+    if target == '' then
+        return
+    end
 
-    -- Demander le mot de remplacement
-    local replacement = vim.fn.input('Remplacer "' .. word .. '" par: ')
-
-    -- Si l'utilisateur annule (ESC), ne rien faire
+    local replacement = vim.fn.input('Remplacer "' .. target .. '" par: ')
     if replacement == '' then
         return
     end
 
-    -- Échapper les caractères spéciaux pour la regex
-    local escaped_word = vim.fn.escape(word, '/\\')
+    local escaped_target = vim.fn.escape(target, '/\\')
     local escaped_replacement = vim.fn.escape(replacement, '/\\')
 
-    -- Déterminer si on est en mode visuel
-    local mode = vim.fn.mode()
-
-    if mode == 'v' or mode == 'V' then
-        -- Mode visuel : substituer dans la sélection
-        vim.cmd("'<,'>s/\\<" .. escaped_word .. '\\>/' .. escaped_replacement .. '/g')
-    else
-        -- Mode normal : substituer sur la ligne courante
-        vim.cmd('s/\\<' .. escaped_word .. '\\>/' .. escaped_replacement .. '/g')
-    end
-
-    -- Effacer le highlight de recherche
-    vim.cmd 'nohlsearch'
+    local line = vim.fn.line '.'
+    vim.cmd(line .. 's/\\<' .. escaped_target .. '\\>/' .. escaped_replacement .. '/g')
 end
 
--- Fonction pour substituer toutes les occurrences d'un mot
 local function substitute_word_all()
-    -- Récupérer le mot sous le curseur
-    local word = vim.fn.expand '<cword>'
+    local target = vim.fn.input 'Mot cible: '
+    if target == '' then
+        return
+    end
 
-    -- Demander le mot de remplacement
-    local replacement = vim.fn.input('Remplacer toutes les occurrences de "' .. word .. '" par: ')
-
-    -- Si l'utilisateur annule (ESC), ne rien faire
+    local replacement = vim.fn.input('Remplacer "' .. target .. '" par: ')
     if replacement == '' then
         return
     end
 
-    -- Échapper les caractères spéciaux pour la regex
-    local escaped_word = vim.fn.escape(word, '/\\')
+    local escaped_target = vim.fn.escape(target, '/\\')
     local escaped_replacement = vim.fn.escape(replacement, '/\\')
 
-    -- Déterminer si on est en mode visuel
-    local mode = vim.fn.mode()
-
-    if mode == 'v' or mode == 'V' then
-        -- Mode visuel : substituer dans la sélection (toutes les occurrences, pas seulement les mots entiers)
-        vim.cmd("'<,'>s/" .. escaped_word .. '/' .. escaped_replacement .. '/g')
-    else
-        -- Mode normal : substituer sur la ligne courante (toutes les occurrences)
-        vim.cmd('s/' .. escaped_word .. '/' .. escaped_replacement .. '/g')
-    end
-
-    -- Effacer le highlight de recherche
-    vim.cmd 'nohlsearch'
+    local line = vim.fn.line '.'
+    vim.cmd(line .. 's/' .. escaped_target .. '/' .. escaped_replacement .. '/g')
 end
 
--- Configuration des keymaps
 vim.keymap.set('n', '<leader>rw', substitute_word, {
-    desc = '[R]eplace [W]ord (current line)',
-    noremap = true,
-    silent = true,
-})
-
-vim.keymap.set('v', '<leader>rw', substitute_word, {
-    desc = '[R]eplace [W]ord (selection)',
+    desc = '[R]eplace [W]ord under cursor (current line)',
     noremap = true,
     silent = true,
 })
@@ -84,10 +49,32 @@ vim.keymap.set('n', '<leader>ra', substitute_word_all, {
     silent = true,
 })
 
-vim.keymap.set('v', '<leader>ra', substitute_word_all, {
-    desc = '[R]eplace [A]ll occurrences (selection)',
-    noremap = true,
-    silent = true,
-})
+vim.keymap.set('v', '<leader>rw', function()
+    local target = vim.fn.expand '<cword>'
+    if target == '' then
+        return
+    end
+    local replacement = vim.fn.input('Remplacer "' .. target .. '" par: ')
+    if replacement == '' then
+        return
+    end
+    local et = vim.fn.escape(target, '/\\')
+    local er = vim.fn.escape(replacement, '/\\')
+    vim.cmd("'<,'>s/\\<" .. et .. '\\>/' .. er .. '/g')
+end, { desc = '[R]eplace [W]ord under cursor (selection)', noremap = true, silent = true })
+
+vim.keymap.set('v', '<leader>ra', function()
+    local target = vim.fn.input 'Mot cible: '
+    if target == '' then
+        return
+    end
+    local replacement = vim.fn.input('Remplacer "' .. target .. '" par: ')
+    if replacement == '' then
+        return
+    end
+    local et = vim.fn.escape(target, '/\\')
+    local er = vim.fn.escape(replacement, '/\\')
+    vim.cmd("'<,'>s/" .. et .. '/' .. er .. '/g')
+end, { desc = '[R]eplace [A]ll (selection)', noremap = true, silent = true })
 
 return {}
