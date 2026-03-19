@@ -12,7 +12,7 @@ return {
         },
         cmd = 'Neotree', -- lazy-load on command
         keys = {
-            { '\\', ':Neotree reveal<CR>', desc = 'NeoTree reveal', silent = true },
+            { '\\', ':Neotree toggle<CR>', desc = 'NeoTree Toggle', silent = true },
         },
         config = function()
             require('neo-tree').setup {
@@ -35,7 +35,6 @@ return {
                         ['<tab>'] = 'open_tabnew', -- Tab -> open file in new tab
                         ['s'] = 'open_split', -- s -> horizontal split
                         ['v'] = 'open_vsplit', -- v -> vertical split
-                        ['\\'] = 'close_window', -- close the Neo-tree window
                     },
                 },
             }
