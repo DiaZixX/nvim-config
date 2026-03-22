@@ -160,16 +160,6 @@ return {
                         vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
                     end
 
-                    -- Disable existing neovim keymaps
-                    vim.api.nvim_create_autocmd({ 'LspAttach', 'BufEnter' }, {
-                        buffer = event.buf,
-                        callback = function()
-                            for _, key in ipairs { 'grr', 'gri', 'gra', 'grn', 'grt' } do
-                                pcall(vim.keymap.del, 'n', key, { buffer = event.buf })
-                            end
-                        end,
-                    })
-
                     local builtin = require 'telescope.builtin'
 
                     -- Jump to the definition of the word under your cursor.
