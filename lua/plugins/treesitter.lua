@@ -5,10 +5,11 @@
 return {
     {
         'nvim-treesitter/nvim-treesitter',
+        branch = 'main',
         build = ':TSUpdate',
-        main = 'nvim-treesitter.configs',
-        opts = {
-            ensure_installed = {
+        init = function()
+            -- Installation des parsers manquants
+            local ensure_installed = {
                 'bash',
                 'c',
                 'diff',
@@ -24,19 +25,28 @@ return {
                 'java',
                 'python',
                 'rust',
-            },
+            }
+            local already_installed = require('nvim-treesitter.config').get_installed()
+            local to_install = vim.iter(ensure_installed)
+                :filter(function(p)
+                    return not vim.tbl_contains(already_installed, p)
+                end)
+                :totable()
+            if #to_install > 0 then
+                require('nvim-treesitter').install(to_install)
+            end
+
+            -- Highlighting + indentation via autocommand (nouvelle API)
+            vim.api.nvim_create_autocmd('FileType', {
+                callback = function()
+                    pcall(vim.treesitter.start)
+                    vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+                end,
+            })
+        end,
+        opts = {
             auto_install = true,
-            highlight = {
-                enable = true,
-                -- Some languages depend on vim's regex highlighting system (such as Ruby) for indent rules.
-                --  If you are experiencing weird indenting issues, add the language to
-                --  the list of additional_vim_regex_highlighting and disabled languages for indent.
-                additional_vim_regex_highlighting = { 'ruby' },
-            },
-            indent = { enable = true, disable = { 'ruby' } },
         },
-        -- Additional Treesitter modules can be explored separately:
-        -- Incremental selection, textobjects, context, etc.
     },
     {
         'nvim-treesitter/nvim-treesitter-context',
@@ -44,21 +54,20 @@ return {
         lazy = false,
         opts = {
             enable = true,
-            multiwindow = true, -- Enable multiwindow support.
-            max_lines = 3, -- Nombre maximum de lignes de contexte à afficher
+            multiwindow = true,
+            max_lines = 3,
             min_window_height = 0,
             line_numbers = true,
-            multiline_threshold = 1, -- Maximum number of lines to show for a single context
-            trim_scope = 'outer', -- Which context lines to discard if `max_lines` is exceeded
-            mode = 'cursor', -- Line used to calculate context. 'cursor' ou 'topline'
-            separator = '-', -- Separator between context and content. Should be a single character string, like '-'.
+            multiline_threshold = 1,
+            trim_scope = 'outer',
+            mode = 'cursor',
+            separator = '-',
             zindex = 20,
             node_types = {
                 rust = { 'impl_item', 'function_item', 'struct_item', 'enum_item', 'trait_item' },
                 c = { 'function_definition', 'struct_specifier', 'enum_specifier', 'union_specifier' },
                 python = { 'function_definition', 'class_definition' },
                 lua = { 'function_declaration', 'function_definition' },
-                -- Add other language if needed
             },
         },
         keys = {

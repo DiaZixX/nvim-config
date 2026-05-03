@@ -121,7 +121,7 @@ return {
             -- Golang config
             require('dap-go').setup {
                 delve = {
-                    detached = vim.loop.os_uname().sysname ~= 'Windows_NT',
+                    detached = vim.uv.os_uname().sysname ~= 'Windows_NT',
                 },
             }
 
