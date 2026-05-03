@@ -45,7 +45,7 @@ vim.opt.rtp:prepend(lazypath)
 -- NOTE: Here is where you install your plugins.
 local plugins_specs = require 'plugins'
 local lazy_icons = require 'configs.lazy_ui'
-require('lazy').setup(plugins_specs, { ui = lazy_icons })
+require('lazy').setup(plugins_specs, { ui = lazy_icons, rocks = { enabled = false } })
 
 -- require 'kickstart.plugins.debug',
 -- require 'kickstart.plugins.indent_line',
