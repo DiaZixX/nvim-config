@@ -5,7 +5,7 @@ return {
     {
         'nvim-telescope/telescope.nvim',
         event = 'VimEnter', -- lazy-load after Vim enters
-        branch = '0.1.x',
+        branch = 'master',
         dependencies = {
             'nvim-lua/plenary.nvim',
             {
