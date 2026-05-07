@@ -71,6 +71,18 @@ return {
             map('n', '<leader>b>', '<Cmd>BufferLineMoveNext<CR>', { desc = '[B]uffer Move [>] Right' })
             map('n', '<leader>b<', '<Cmd>BufferLineMovePrev<CR>', { desc = '[B]uffer Move [<] Left' })
             map('n', '<leader>bf', '<Cmd>BufferLineTogglePin<CR>', { desc = '[B]uffer Toggle [F]ix (Pin)' })
+            for i = 1, 9 do
+                map('n', '<leader>b' .. i, '<Cmd>BufferLineGoToBuffer ' .. i .. '<CR>', { desc = '[B]uffer go to [' .. i .. ']' })
+            end
+            map('n', '<leader>bd', function()
+                local bufs = vim.fn.getbufinfo { buflisted = 1 }
+                if #bufs > 1 then
+                    vim.cmd 'bprevious'
+                else
+                    vim.cmd 'enew' -- buffer vide si aucun autre
+                end
+                vim.cmd 'bdelete #'
+            end, { noremap = true, silent = true, desc = '[B]uffer [D]elete current' })
         end,
     },
 }

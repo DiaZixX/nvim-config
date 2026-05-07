@@ -29,18 +29,6 @@ keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window'
 keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
 keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
--- ===== Buffers =====
--- keymap.set('n', '<leader>x', ':bdelete<CR>', { noremap = true, silent = true, desc = '[B]uffer [D]elete current' })
-keymap.set('n', '<leader>x', function()
-    local bufs = vim.fn.getbufinfo { buflisted = 1 }
-    if #bufs > 1 then
-        vim.cmd 'bprevious'
-    else
-        vim.cmd 'enew' -- buffer vide si aucun autre
-    end
-    vim.cmd 'bdelete #'
-end, { noremap = true, silent = true, desc = '[B]uffer [D]elete current' })
-
 -- ===== Optional =====
 -- Disable arrow keys in normal mode to encourage hjkl usage
 keymap.set('n', '<left>', '<cmd>echo "Use h to move!"<CR>')
