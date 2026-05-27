@@ -37,3 +37,11 @@ api.nvim_create_autocmd('VimEnter', {
         end
     end,
 })
+
+-- ===== Force filetype for .h files =====
+api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
+    pattern = '*.h',
+    callback = function()
+        vim.bo.filetype = 'c'
+    end,
+})

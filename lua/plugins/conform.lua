@@ -33,8 +33,14 @@ return {
                     lsp_format = lsp_format_opt,
                 }
             end,
+            formatters = {
+                ['clang-format'] = {
+                    prepend_args = { '--style={BasedOnStyle: LLVM, IndentWidth: 4}' },
+                },
+            },
             formatters_by_ft = {
                 lua = { 'stylua' },
+                c = { 'clang-format' },
                 cpp = { 'clang-format' },
                 python = { 'isort', 'black' },
                 -- You can add JS/TS formatters here if needed
