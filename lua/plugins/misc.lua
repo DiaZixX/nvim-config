@@ -27,12 +27,48 @@ return {
             --  - ci'  - [C]hange [I]nside [']quote
             require('mini.ai').setup { n_lines = 500 }
 
-            -- Add/delete/replace surroundings (brackets, quotes, etc.)
+            -- Surround actions
             --
-            -- - saiw) - [S]urround [A]dd [I]nner [W]ord [)]Paren
-            -- - sd'   - [S]urround [D]elete [']quotes
-            -- - sr)'  - [S]urround [R]eplace [)] [']
-            require('mini.surround').setup()
+            -- Operators (toujours suivis d'un motion ou text object) :
+            --   sa<motion><char> : Add surrounding
+            --   sd<char>         : Delete surrounding
+            --   sr<old><new>     : Replace surrounding
+            --   sf / sF          : Find surrounding (droite / gauche)
+            --   sh               : Highlight surrounding
+            --
+            -- Suffixes next/last :
+            --   sdn / sdl        : Delete next / last surrounding
+            --   srn / srl        : Replace next / last surrounding
+            --
+            -- Caractères utiles :
+            --   )  → ()   sans espaces    (  → ( ) avec espaces
+            --   }  → {}   sans espaces    {  → { } avec espaces
+            --   ]  → []   sans espaces    [  → [ ] avec espaces
+            --   "  → ""   q  → ""
+            --   '  → ''   `  → ``
+            --   t  → tag HTML
+            --   f  → function call
+            --
+            -- Exemples fréquents :
+            --   saiw)  → entoure le mot de ()
+            --   saiw"  → entoure le mot de ""
+            --   sd"    → supprime les ""
+            --   sr"'   → remplace " par '
+            --   sr({   → remplace () par {}
+            require('mini.surround').setup {
+                search_method = 'cover_or_nearest',
+                n_lines = 50,
+                mappings = {
+                    add = 'sa',
+                    delete = 'sd',
+                    find = 'sf',
+                    find_left = 'sF',
+                    highlight = 'sh',
+                    replace = 'sr',
+                    suffix_last = 'l',
+                    suffix_next = 'n',
+                },
+            }
 
             -- Simple and easy statusline
             local statusline = require 'mini.statusline'
@@ -43,9 +79,6 @@ return {
             statusline.section_location = function()
                 return '%2l:%-2v'
             end
-
-            -- ... and there is more!
-            --  Check out: https://github.com/echasnovski/mini.nvim
         end,
     },
 }

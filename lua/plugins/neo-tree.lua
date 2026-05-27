@@ -47,8 +47,10 @@ return {
                     mappings = {
                         ['<cr>'] = 'open', -- Enter -> open file in buffer
                         ['<tab>'] = 'open_tabnew', -- Tab -> open file in new tab
-                        ['s'] = 'open_split', -- s -> horizontal split
-                        ['v'] = 'open_vsplit', -- v -> vertical split
+                        ['hs'] = 'open_split', -- s -> horizontal split
+                        ['vs'] = 'open_vsplit', -- v -> vertical split
+                        ['s'] = 'none',
+                        ['v'] = 'none',
                     },
                 },
             }

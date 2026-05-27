@@ -6,13 +6,9 @@ return {
         'folke/which-key.nvim',
         event = 'VimEnter', -- load after Vim enters
         opts = {
-            -- Delay between pressing a key and showing which-key (milliseconds)
-            -- independent of vim.opt.timeoutlen
             delay = 0,
             icons = {
-                -- Use icons if you have a Nerd Font installed
                 mappings = vim.g.have_nerd_font,
-                -- If no Nerd Font, fallback to string table
                 keys = vim.g.have_nerd_font and {} or {
                     Up = '<Up> ',
                     Down = '<Down> ',
@@ -45,8 +41,8 @@ return {
                 },
             },
 
-            -- Document existing key chains
             spec = {
+                -- Leader groups
                 { '<leader>c', group = '[C]ode', mode = { 'n' } },
                 { '<leader>d', group = '[D]ocument' },
                 { '<leader>s', group = '[S]earch' },
@@ -54,6 +50,15 @@ return {
                 { '<leader>t', group = '[T]oggle' },
                 { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } },
                 { '<leader>r', group = '[R]ename & [R]eplace' },
+                { '<leader>b', group = '[B]uffer' },
+                { '<leader>n', group = '[N]eogen' },
+                -- Surround groups (mini.surround, préfixe 's')
+                { 'sa', group = '[S]urround [A]dd', mode = { 'n', 'v' } },
+                { 'sd', group = '[S]urround [D]elete', mode = { 'n' } },
+                { 'sr', group = '[S]urround [R]eplace', mode = { 'n' } },
+                { 'sf', group = '[S]urround [F]ind →', mode = { 'n' } },
+                { 'sF', group = '[S]urround [F]ind ←', mode = { 'n' } },
+                { 'sh', group = '[S]urround [H]ighlight', mode = { 'n' } },
             },
         },
     },
