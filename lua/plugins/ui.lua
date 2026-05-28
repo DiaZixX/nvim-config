@@ -2,6 +2,21 @@
 -- UI-related plugins (statusline, bufferline, icons, etc.)
 
 return {
+    -- ===== nvim-web-devicons =====
+    {
+        'nvim-tree/nvim-web-devicons',
+        lazy = false, -- charge au démarrage, les autres plugins en dépendent
+        priority = 900,
+        config = function()
+            require('nvim-web-devicons').setup {
+                color_icons = true, -- couleurs différentes par icône
+                default = true, -- icône par défaut si aucune trouvée
+                strict = true, -- match exact sur l'extension
+            }
+        end,
+    },
+
+    -- ===== bufferline =====
     {
         'akinsho/bufferline.nvim',
         version = '*',

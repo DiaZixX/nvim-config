@@ -122,7 +122,7 @@ return {
 
             -- ===== mini.statusline =====
             local statusline = require 'mini.statusline'
-            statusline.setup { use_icons = vim.g.have_nerd_font }
+            statusline.setup { use_icons = true }
 
             ---@diagnostic disable-next-line: duplicate-set-field
             statusline.section_location = function()
