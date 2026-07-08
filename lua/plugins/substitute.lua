@@ -60,6 +60,7 @@ vim.keymap.set('v', '<leader>rw', function()
     end
     local et = vim.fn.escape(target, '/\\')
     local er = vim.fn.escape(replacement, '/\\')
+    vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<Esc>', true, false, true), 'x', false)
     vim.cmd("'<,'>s/\\<" .. et .. '\\>/' .. er .. '/g')
 end, { desc = '[R]eplace [W]ord under cursor (selection)', noremap = true, silent = true })
 
@@ -74,6 +75,7 @@ vim.keymap.set('v', '<leader>ra', function()
     end
     local et = vim.fn.escape(target, '/\\')
     local er = vim.fn.escape(replacement, '/\\')
+    vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<Esc>', true, false, true), 'x', false)
     vim.cmd("'<,'>s/" .. et .. '/' .. er .. '/g')
 end, { desc = '[R]eplace [A]ll (selection)', noremap = true, silent = true })
 
