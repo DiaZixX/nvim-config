@@ -45,3 +45,18 @@ api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
         vim.bo.filetype = 'c'
     end,
 })
+
+-- Silence treesitter "Index out of bounds" during formatting
+api.nvim_create_autocmd('BufWritePre', {
+    pattern = { '*.c', '*.h', '*.cpp' },
+    callback = function()
+        vim.treesitter.stop()
+    end,
+})
+
+api.nvim_create_autocmd('BufWritePost', {
+    pattern = { '*.c', '*.h', '*.cpp' },
+    callback = function()
+        pcall(vim.treesitter.start)
+    end,
+})

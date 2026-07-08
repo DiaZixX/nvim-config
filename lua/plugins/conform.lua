@@ -35,7 +35,9 @@ return {
             end,
             formatters = {
                 ['clang-format'] = {
-                    prepend_args = { '--style={BasedOnStyle: LLVM, IndentWidth: 4}' },
+                    prepend_args = {
+                        '--style=file',
+                    },
                 },
             },
             formatters_by_ft = {
