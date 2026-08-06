@@ -43,6 +43,7 @@ return {
                 c = { 'clang-format' },
                 cpp = { 'clang-format' },
                 python = { 'isort', 'black' },
+                tex = { 'latexindent' },
                 -- You can add JS/TS formatters here if needed
                 -- javascript = { "prettierd", "prettier", stop_after_first = true },
             },
