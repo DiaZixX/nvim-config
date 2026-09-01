@@ -27,8 +27,8 @@ return {
                     mode = 'buffers',
                     separator_style = 'slope', -- slope | slant
                     themable = true,
-                    show_buffer_close_icons = true,
-                    show_close_icon = true,
+                    show_buffer_close_icons = false,
+                    show_close_icon = false,
                     indicator = {
                         style = 'underline', -- underline indicator
                     },
@@ -63,9 +63,9 @@ return {
 
                     -- Naming & sorting
                     truncate_names = true,
-                    max_name_length = 25,
-                    max_prefix_length = 15,
-                    tab_size = 22,
+                    max_name_length = 18,
+                    max_prefix_length = 10,
+                    tab_size = 15,
                     sort_by = 'insert_after_current',
                     diagnostics_update_in_insert = false,
                     color_icons = true,
