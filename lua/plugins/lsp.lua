@@ -100,6 +100,21 @@ return {
                         },
                     },
                 },
+                texlab = {
+                    settings = {
+                        texlab = {
+                            build = {
+                                executable = 'latexmk',
+                                args = { '-pdf', '-interaction=nonstopmode', '-synctex=1', '%f' },
+                                onSave = true,
+                            },
+                            forwardSearch = {
+                                executable = 'zathura',
+                                args = { '--synctex-forward', '%l:1:%f', '%p' },
+                            },
+                        },
+                    },
+                },
             }
 
             -- ===============================
@@ -112,6 +127,7 @@ return {
                 'codelldb', -- Used for debug in C/Cpp
                 'black', -- Used to format python
                 'isort', -- Used to format python too
+                'latexindent', -- Used to format Latex
             })
             require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
