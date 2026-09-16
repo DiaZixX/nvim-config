@@ -92,7 +92,16 @@ return {
                     },
                 },
                 cobol_ls = {},
-                rust_analyzer = {},
+                rust_analyzer = {
+                    settings = {
+                        ['rust-analyzer'] = {
+                            cargo = {
+                                buildScripts = { enable = true },
+                            },
+                            procMacro = { enable = true },
+                        },
+                    },
+                },
                 lua_ls = {
                     settings = {
                         Lua = {
