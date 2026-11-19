@@ -36,6 +36,11 @@ vim.list_extend(plugins, require 'plugins.telescope')
 vim.list_extend(plugins, require 'plugins.neo-tree')
 
 -- ===============================
+-- Dev container
+-- ===============================
+vim.list_extend(plugins, require 'plugins.devcontainer')
+
+-- ===============================
 -- UI / Bufferline
 -- ===============================
 vim.list_extend(plugins, require 'plugins.ui')
