@@ -128,6 +128,21 @@ return {
             statusline.section_location = function()
                 return '%2l:%-2v'
             end
+
+            -- Show the active remote-sshfs host (󰀻 vmdev) next to the git branch.
+            -- Only looks at already-loaded modules so the lazy remote plugins stay unloaded.
+            local section_git = statusline.section_git
+            ---@diagnostic disable-next-line: duplicate-set-field
+            statusline.section_git = function(args)
+                local git = section_git(args)
+                local conn = package.loaded['remote-sshfs.connections']
+                if conn and conn.is_connected() then
+                    local host = conn.get_current_host() or {}
+                    local remote = '󰀻 ' .. (host.Name or 'remote')
+                    return git == '' and remote or (remote .. ' ' .. git)
+                end
+                return git
+            end
         end,
     },
 }

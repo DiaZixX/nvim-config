@@ -24,6 +24,7 @@ vim.list_extend(plugins, require 'plugins.debug')
 -- Treesitter
 -- ===============================
 vim.list_extend(plugins, require 'plugins.treesitter')
+vim.list_extend(plugins, require 'plugins.latex')
 
 -- ===============================
 -- Telescope (fuzzy finder)
@@ -39,6 +40,11 @@ vim.list_extend(plugins, require 'plugins.neo-tree')
 -- Dev container
 -- ===============================
 vim.list_extend(plugins, require 'plugins.devcontainer')
+
+-- ===============================
+-- Remote development (sshfs + remote LSP, e.g. libvirt VM)
+-- ===============================
+vim.list_extend(plugins, require 'plugins.remote')
 
 -- ===============================
 -- UI / Bufferline

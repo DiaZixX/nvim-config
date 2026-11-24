@@ -521,3 +521,7 @@ F3  → Step Out
 ---
 
 *Generated from nvim-config analysis - May 2026*
+
+## Remote development (VM)
+
+`lua/plugins/remote.lua` : sshfs + clangd distant (`<leader>R*`). Voir [docs/remote-vm.md](docs/remote-vm.md).

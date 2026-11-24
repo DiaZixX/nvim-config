@@ -52,6 +52,7 @@ return {
                 { '<leader>r', group = '[R]ename & [R]eplace' },
                 { '<leader>b', group = '[B]uffer' },
                 { '<leader>n', group = '[N]eogen' },
+                { '<leader>R', group = '[R]emote (sshfs + LSP)' },
                 -- Surround groups (mini.surround, préfixe 's')
                 { 'sa', group = '[S]urround [A]dd', mode = { 'n', 'v' } },
                 { 'sd', group = '[S]urround [D]elete', mode = { 'n' } },

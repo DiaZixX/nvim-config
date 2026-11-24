@@ -18,25 +18,26 @@ api.nvim_create_autocmd('TextYankPost', {
 
 -- ===== Open on Neo-tree =====
 -- Avoid having buffer on folder
-api.nvim_create_autocmd('VimEnter', {
-    callback = function(data)
-        -- Check if Neovim was opened on a directory
-        if vim.fn.isdirectory(data.file) == 1 then
-            -- Open a new empty buffer to replace the default directory buffer
-            vim.cmd.enew()
-            -- Delete the automatically created directory buffer
-            vim.cmd.bdelete(data.buf)
-            -- Change the working directory to the opened folder
-            vim.cmd.cd(data.file)
-            -- Open Neo-tree on the left side and reveal the folder
-            require('neo-tree.command').execute {
-                source = 'filesystem',
-                position = 'left',
-                reveal = true,
-            }
-        end
-    end,
-})
+--vim.api.nvim_create_autocmd('VimEnter', {
+--    callback = function(data)
+--        if vim.fn.isdirectory(data.file) ~= 1 then
+--            return
+--        end
+--
+--       vim.cmd.enew()
+--        vim.cmd.bdelete(data.buf)
+--        vim.cmd.cd(data.file)
+--
+--        -- Ensure Neo-tree is loaded before using it
+--       require('lazy').load({ plugins = { 'neo-tree.nvim' } })
+--
+--        require('neo-tree.command').execute({
+--            source = 'filesystem',
+--            position = 'left',
+--            reveal = true,
+--        })
+--    end,
+-- })
 
 -- ===== Force filetype for .h files =====
 api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
