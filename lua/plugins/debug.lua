@@ -6,6 +6,7 @@ return {
         'mfussenegger/nvim-dap',
         dependencies = {
             'rcarriga/nvim-dap-ui',
+            'nvim-neotest/nvim-nio', -- requis par nvim-dap-ui
             'williamboman/mason.nvim',
             'jay-babu/mason-nvim-dap.nvim',
             'leoluz/nvim-dap-go',
@@ -82,7 +83,8 @@ return {
             -- Mason-nvim-dap setup
             require('mason-nvim-dap').setup {
                 automatic_installation = true,
-                ensure_installed = { 'delve', 'codelldb', 'debugpy' },
+                ensure_installed = { 'delve', 'codelldb', 'python' },
+                handlers = {}, -- déclare les adapters (codelldb, python...)
             }
 
             -- DAP UI setup

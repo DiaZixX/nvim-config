@@ -122,7 +122,38 @@ return {
 
             -- ===== mini.statusline =====
             local statusline = require 'mini.statusline'
-            statusline.setup { use_icons = true }
+            statusline.setup {
+                use_icons = true,
+                content = {
+                    active = function()
+                        local mode, mode_hl = statusline.section_mode { trunc_width = 120 }
+                        local git = statusline.section_git { trunc_width = 40 }
+                        local diff = statusline.section_diff { trunc_width = 75 }
+                        local diagnostics = statusline.section_diagnostics { trunc_width = 75 }
+                        local lsp = statusline.section_lsp { trunc_width = 75 }
+                        local filename = statusline.section_filename { trunc_width = 140 }
+                        local fileinfo = statusline.section_fileinfo { trunc_width = 120 }
+                        local search = statusline.section_searchcount { trunc_width = 75 }
+                        local macro = vim.fn.reg_recording()
+                        if macro ~= '' then
+                            macro = 'REC @' .. macro
+                        end
+                        local cwd = vim.fn.fnamemodify(vim.fn.getcwd(), ':t')
+
+                        return statusline.combine_groups {
+                            { hl = mode_hl, strings = { mode } },
+                            { hl = 'MiniStatuslineDevinfo', strings = { git, diff, diagnostics, lsp } },
+                            '%<', -- point de coupure si la fenêtre est étroite
+                            { hl = 'MiniStatuslineFilename', strings = { filename } },
+                            '%=', -- la suite est alignée à droite
+                            { hl = 'DiagnosticWarn', strings = { macro } },
+                            { hl = 'MiniStatuslineFileinfo', strings = { cwd, fileinfo } },
+                            { hl = mode_hl, strings = { search, '%l:%v %p%%' } },
+                        }
+                    end,
+                },
+            }
+            vim.o.laststatus = 3 -- une seule barre pour tous les splits
 
             ---@diagnostic disable-next-line: duplicate-set-field
             statusline.section_location = function()

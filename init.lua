@@ -12,6 +12,9 @@ vim.g.have_nerd_font = true
 --  For more options, you can see `:help option-list`
 require 'core.options'
 
+-- [[ Cmdline config ]]
+require 'core.cmdline'
+
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
 require 'core.keymaps'
@@ -45,7 +48,7 @@ vim.opt.rtp:prepend(lazypath)
 -- NOTE: Here is where you install your plugins.
 local plugins_specs = require 'plugins'
 local lazy_icons = require 'configs.lazy_ui'
-require('lazy').setup(plugins_specs, { ui = lazy_icons, rocks = { enabled = false } })
+require('lazy').setup(plugins_specs, { ui = { icons = lazy_icons }, rocks = { enabled = false } })
 
 -- require 'kickstart.plugins.debug',
 -- require 'kickstart.plugins.indent_line',

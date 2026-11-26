@@ -18,21 +18,10 @@ return {
         },
         opts = {
             notify_on_error = true,
-            format_on_save = function(bufnr)
-                -- Disable "format_on_save lsp_fallback" for languages that don't
-                -- have a well standardized coding style. Add more languages if needed.
-                local disable_filetypes = { c = false, cpp = false, python = false }
-                local lsp_format_opt
-                if disable_filetypes[vim.bo[bufnr].filetype] then
-                    lsp_format_opt = 'never'
-                else
-                    lsp_format_opt = 'fallback'
-                end
-                return {
-                    timeout_ms = 3000,
-                    lsp_format = lsp_format_opt,
-                }
-            end,
+            format_on_save = {
+                timeout_ms = 3000,
+                lsp_format = 'fallback',
+            },
             formatters = {
                 ['clang-format'] = {
                     prepend_args = {

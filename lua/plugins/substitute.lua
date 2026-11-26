@@ -13,10 +13,10 @@ local function substitute_word()
     end
 
     local escaped_target = vim.fn.escape(target, '/\\')
-    local escaped_replacement = vim.fn.escape(replacement, '/\\')
+    local escaped_replacement = vim.fn.escape(replacement, '/\\&~')
 
     local line = vim.fn.line '.'
-    vim.cmd(line .. 's/\\<' .. escaped_target .. '\\>/' .. escaped_replacement .. '/g')
+    vim.cmd(line .. 's/\\V\\<' .. escaped_target .. '\\>/' .. escaped_replacement .. '/g')
 end
 
 local function substitute_word_all()
@@ -31,10 +31,10 @@ local function substitute_word_all()
     end
 
     local escaped_target = vim.fn.escape(target, '/\\')
-    local escaped_replacement = vim.fn.escape(replacement, '/\\')
+    local escaped_replacement = vim.fn.escape(replacement, '/\\&~')
 
     local line = vim.fn.line '.'
-    vim.cmd(line .. 's/' .. escaped_target .. '/' .. escaped_replacement .. '/g')
+    vim.cmd(line .. 's/\\V' .. escaped_target .. '/' .. escaped_replacement .. '/g')
 end
 
 vim.keymap.set('n', '<leader>rw', substitute_word, {
@@ -59,9 +59,9 @@ vim.keymap.set('v', '<leader>rw', function()
         return
     end
     local et = vim.fn.escape(target, '/\\')
-    local er = vim.fn.escape(replacement, '/\\')
+    local er = vim.fn.escape(replacement, '/\\&~')
     vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<Esc>', true, false, true), 'x', false)
-    vim.cmd("'<,'>s/\\<" .. et .. '\\>/' .. er .. '/g')
+    vim.cmd("'<,'>s/\\V\\<" .. et .. '\\>/' .. er .. '/g')
 end, { desc = '[R]eplace [W]ord under cursor (selection)', noremap = true, silent = true })
 
 vim.keymap.set('v', '<leader>ra', function()
@@ -74,9 +74,9 @@ vim.keymap.set('v', '<leader>ra', function()
         return
     end
     local et = vim.fn.escape(target, '/\\')
-    local er = vim.fn.escape(replacement, '/\\')
+    local er = vim.fn.escape(replacement, '/\\&~')
     vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<Esc>', true, false, true), 'x', false)
-    vim.cmd("'<,'>s/" .. et .. '/' .. er .. '/g')
+    vim.cmd("'<,'>s/\\V" .. et .. '/' .. er .. '/g')
 end, { desc = '[R]eplace [A]ll (selection)', noremap = true, silent = true })
 
 return {}

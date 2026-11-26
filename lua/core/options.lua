@@ -30,7 +30,7 @@ opt.incsearch = true -- Show search results as you type
 opt.hlsearch = true -- Highlight all matches
 
 -- ===== Files & History =====
-opt.undofile = false -- Disable persistent undo
+opt.undofile = true -- Undo conservé après fermeture
 opt.swapfile = true -- Enable swap files
 opt.backup = false -- Disable backup files
 opt.writebackup = false -- No temp backup during writing

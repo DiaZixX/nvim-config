@@ -42,12 +42,7 @@ api.nvim_create_autocmd('VimEnter', {
 })
 
 -- ===== Force filetype for .h files =====
-api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
-    pattern = '*.h',
-    callback = function()
-        vim.bo.filetype = 'c'
-    end,
-})
+vim.g.c_syntax_for_h = true
 
 -- Silence treesitter "Index out of bounds" during formatting
 api.nvim_create_autocmd('BufWritePre', {

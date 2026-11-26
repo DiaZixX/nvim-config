@@ -43,6 +43,17 @@ return {
             vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
             vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
 
+            -- Variantes incluant les fichiers cachés et ignorés par git
+            vim.keymap.set('n', '<leader>sF', function()
+                builtin.find_files { hidden = true, no_ignore = true, file_ignore_patterns = { '%.git/' } }
+            end, { desc = '[S]earch all [F]iles (hidden + ignored)' })
+            vim.keymap.set('n', '<leader>sG', function()
+                builtin.live_grep {
+                    additional_args = { '--hidden', '--no-ignore', '--glob', '!**/.git/*' },
+                    prompt_title = 'Live Grep (tous les fichiers)',
+                }
+            end, { desc = '[S]earch by [G]rep (hidden + ignored)' })
+
             -- Fuzzy search in current buffer
             vim.keymap.set('n', '<leader>/', function()
                 builtin.current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {

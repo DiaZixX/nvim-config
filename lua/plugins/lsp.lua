@@ -23,20 +23,15 @@ return {
         'mfussenegger/nvim-jdtls',
         ft = 'java', -- load only for Java files
         config = function()
-            -- Determine the Java LSP executable and project root
-            local cmd = { vim.fn.expand '~/.local/share/nvim/mason/bin/jdtls' }
-            local root_dir = vim.fs.dirname(vim.fs.find({ 'gradlew', '.git', 'mvnw' }, { upward = true })[1])
-
-            -- Start or attach jdtls automatically for Java files
-            vim.api.nvim_create_autocmd('FileType', {
-                pattern = 'java',
-                callback = function()
-                    require('jdtls').start_or_attach {
-                        cmd = cmd,
-                        root_dir = root_dir,
-                    }
-                end,
-            })
+            local function attach()
+                require('jdtls').start_or_attach {
+                    cmd = { vim.fn.stdpath 'data' .. '/mason/bin/jdtls' },
+                    -- recalculé pour chaque buffer
+                    root_dir = vim.fs.root(0, { 'gradlew', 'mvnw', '.git' }),
+                }
+            end
+            vim.api.nvim_create_autocmd('FileType', { pattern = 'java', callback = attach })
+            attach() -- le premier buffer Java
         end,
     },
 
@@ -187,14 +182,14 @@ return {
                     --  To jump back, press <C-t>.
                     map('gd', builtin.lsp_definitions, '[G]oto [D]efinition')
                     -- Find references for the word under your cursor.
-                    map('gr', builtin.lsp_references, '[G]oto [R]eferences')
+                    map('grr', builtin.lsp_references, '[G]oto [R]eferences')
                     -- Jump to the implementation of the word under your cursor.
                     --  Useful when your language has ways of declaring types without an actual implementation.
-                    map('gI', builtin.lsp_implementations, '[G]oto [I]mplementation')
+                    map('gri', builtin.lsp_implementations, '[G]oto [I]mplementation')
                     -- Jump to the type of the word under your cursor.
                     --  Useful when you're not sure what type a variable is and you want to see
                     --  the definition of its *type*, not where it was *defined*.
-                    map('<leader>D', builtin.lsp_type_definitions, 'Type [D]efinition')
+                    map('grt', builtin.lsp_type_definitions, 'Type [D]efinition')
                     -- Fuzzy find all the symbols in your current document.
                     --  Symbols are things like variables, functions, types, etc.
                     map('<leader>ds', builtin.lsp_document_symbols, '[D]ocument [S]ymbols')
@@ -256,6 +251,12 @@ return {
             -- ===============================
             vim.diagnostic.config {
                 severity_sort = true,
+                -- ouvre le flottant après ]d / [d (mappings natifs)
+                jump = {
+                    on_jump = function(_, bufnr)
+                        vim.diagnostic.open_float { bufnr = bufnr, scope = 'cursor', focus = false }
+                    end,
+                },
                 float = { border = 'rounded', source = 'if_many' },
                 underline = { severity = vim.diagnostic.severity.ERROR },
                 signs = vim.g.have_nerd_font and {

@@ -35,12 +35,12 @@ return {
                 },
 
                 window = {
-                    border = 'rounded',
+                    completion = cmp.config.window.bordered { border = 'rounded' },
+                    documentation = cmp.config.window.bordered { border = 'rounded' },
                 },
 
                 completion = {
                     completeopt = 'menu,menuone,noinsert',
-                    border = 'rounded',
                 },
 
                 -- For an understanding of why these mappings were

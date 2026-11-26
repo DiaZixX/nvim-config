@@ -48,7 +48,7 @@ return {
             { '<leader>gdc', '<cmd>DiffviewClose<cr>', desc = 'Fermer Diffview' },
             { '<leader>gdh', '<cmd>DiffviewFileHistory<cr>', desc = 'Historique (repo)' },
             { '<leader>gdf', '<cmd>DiffviewFileHistory %<cr>', desc = 'Historique (fichier courant)' },
-            { '<leader>gdf', ":'<,'>DiffviewFileHistory<cr>", mode = 'v', desc = 'Historique (sélection)' },
+            { '<leader>gdf', ":DiffviewFileHistory<cr>", mode = 'v', desc = 'Historique (sélection)' },
             { '<leader>gdr', '<cmd>DiffviewRefresh<cr>', desc = 'Rafraîchir Diffview' },
             { '<leader>gdm', '<cmd>DiffviewOpen main...HEAD<cr>', desc = 'Diff vs main' },
             { '<leader>gdM', '<cmd>DiffviewOpen HEAD~1<cr>', desc = 'Diff vs dernier commit' },

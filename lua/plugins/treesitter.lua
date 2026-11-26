@@ -7,46 +7,29 @@ return {
         'nvim-treesitter/nvim-treesitter',
         branch = 'main',
         build = ':TSUpdate',
-        init = function()
-            -- Installation des parsers manquants
-            local ensure_installed = {
-                'bash',
-                'c',
-                'diff',
-                'html',
-                'lua',
-                'luadoc',
-                'markdown',
-                'markdown_inline',
-                'query',
-                'vim',
-                'vimdoc',
-                'latex',
-                'java',
-                'python',
-                'rust',
+        lazy = false,
+        config = function()
+            -- install() ignore les parsers déjà présents
+            require('nvim-treesitter').install {
+                'bash', 'c', 'cpp', 'diff', 'html', 'java', 'json', 'latex', 'lua', 'luadoc',
+                'markdown', 'markdown_inline', 'python', 'query', 'rust', 'vim', 'vimdoc',
             }
-            local already_installed = require('nvim-treesitter.config').get_installed()
-            local to_install = vim.iter(ensure_installed)
-                :filter(function(p)
-                    return not vim.tbl_contains(already_installed, p)
-                end)
-                :totable()
-            if #to_install > 0 then
-                require('nvim-treesitter').install(to_install)
-            end
 
-            -- Highlighting + indentation via autocommand (nouvelle API)
             vim.api.nvim_create_autocmd('FileType', {
-                callback = function()
-                    pcall(vim.treesitter.start)
-                    vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+                group = vim.api.nvim_create_augroup('user-treesitter', { clear = true }),
+                callback = function(ev)
+                    local lang = vim.treesitter.language.get_lang(ev.match)
+                    -- latex : on laisse la coloration à VimTeX
+                    if not lang or lang == 'latex' or not vim.treesitter.language.add(lang) then
+                        return
+                    end
+                    vim.treesitter.start(ev.buf, lang)
+                    if vim.treesitter.query.get(lang, 'indents') then
+                        vim.bo[ev.buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+                    end
                 end,
             })
         end,
-        opts = {
-            auto_install = true,
-        },
     },
     {
         'nvim-treesitter/nvim-treesitter-textobjects',
@@ -67,16 +50,10 @@ return {
             mode = 'cursor',
             separator = '-',
             zindex = 20,
-            node_types = {
-                rust = { 'impl_item', 'function_item', 'struct_item', 'enum_item', 'trait_item' },
-                c = { 'function_definition', 'struct_specifier', 'enum_specifier', 'union_specifier' },
-                python = { 'function_definition', 'class_definition' },
-                lua = { 'function_declaration', 'function_definition' },
-            },
         },
         keys = {
             {
-                '[c',
+                '[C', -- [c reste le « changement précédent » en mode diff
                 function()
                     require('treesitter-context').go_to_context(vim.v.count1)
                 end,

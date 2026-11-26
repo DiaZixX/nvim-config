@@ -54,22 +54,6 @@ return {
                     extra = true,
                 },
             }
-
-            -- Keymaps personnalisés additionnels
-
-            -- Toggle commentaire en mode visuel avec <leader>c
-            vim.keymap.set('v', '<leader>c', '<ESC><cmd>lua require("Comment.api").toggle.linewise(vim.fn.visualmode())<CR>', {
-                desc = '[C]omment toggle linewise (visual)',
-                noremap = true,
-                silent = true,
-            })
-
-            -- Toggle block comment en mode visuel avec <leader>b
-            vim.keymap.set('v', '<leader>b', '<ESC><cmd>lua require("Comment.api").toggle.blockwise(vim.fn.visualmode())<CR>', {
-                desc = '[B]lock comment toggle (visual)',
-                noremap = true,
-                silent = true,
-            })
         end,
     },
 
